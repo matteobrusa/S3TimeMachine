@@ -42,6 +42,11 @@ public class S3TimeMachine {
 			List<String> list = new LinkedList<String>(Arrays.asList(args));
 			boolean valid = true;
 
+			if (list.isEmpty()) {
+				help();
+				System.exit(1);
+			}
+
 			String action = list.get(0);
 			list.remove(action);
 
