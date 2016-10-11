@@ -1,4 +1,4 @@
-package com.matteobrusa.s3backup;
+package com.matteobrusa.s3timemachine;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -35,7 +35,7 @@ public class Tools {
 	//
 	// }
 
-	static byte[] stringToByteArray(String s) {
+	public static byte[] stringToByteArray(String s) {
 		byte[] res = new byte[s.length() / 2];
 
 		for (int i = 0; i < s.length(); i += 2) {
@@ -45,7 +45,7 @@ public class Tools {
 		return res;
 	}
 
-	static String byteArrayToString(byte[] b) {
+	public static String byteArrayToString(byte[] b) {
 
 		String result = "";
 

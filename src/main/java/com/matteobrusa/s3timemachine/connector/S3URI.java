@@ -1,4 +1,4 @@
-package com.matteobrusa.s3backup.connector;
+package com.matteobrusa.s3timemachine.connector;
 
 import java.io.File;
 

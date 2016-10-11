@@ -1,4 +1,4 @@
-package com.matteobrusa.s3backup;
+package com.matteobrusa.s3timemachine;
 
 import java.io.File;
 import java.nio.file.Paths;

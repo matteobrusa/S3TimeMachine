@@ -1,4 +1,4 @@
-package com.matteobrusa.s3backup;
+package com.matteobrusa.s3timemachine;
 
 public class Report {
 	public int count = 0, transferred = 0;

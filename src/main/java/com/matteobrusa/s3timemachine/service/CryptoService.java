@@ -1,5 +1,5 @@
 
-package com.matteobrusa.s3backup;
+package com.matteobrusa.s3timemachine.service;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;

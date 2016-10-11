@@ -1,4 +1,4 @@
-package com.matteobrusa.s3backup.connector;
+package com.matteobrusa.s3timemachine.connector;
 
 import java.io.BufferedReader;
 import java.io.ByteArrayInputStream;
@@ -21,6 +21,8 @@ import com.amazonaws.services.s3.AmazonS3Client;
 import com.amazonaws.services.s3.model.AmazonS3Exception;
 import com.amazonaws.services.s3.model.DeleteObjectsRequest;
 import com.amazonaws.services.s3.model.DeleteObjectsRequest.KeyVersion;
+import com.matteobrusa.s3timemachine.S3TimeMachine;
+import com.matteobrusa.s3timemachine.SigHelper;
 import com.amazonaws.services.s3.model.GetObjectRequest;
 import com.amazonaws.services.s3.model.ListObjectsRequest;
 import com.amazonaws.services.s3.model.ObjectListing;
@@ -30,8 +32,6 @@ import com.amazonaws.services.s3.model.S3Object;
 import com.amazonaws.services.s3.model.S3ObjectInputStream;
 import com.amazonaws.services.s3.model.S3ObjectSummary;
 import com.amazonaws.services.s3.model.StorageClass;
-import com.matteobrusa.s3backup.S3Backup;
-import com.matteobrusa.s3backup.SigHelper;
 
 public class S3BackupConnector implements BackupConnector {
 
@@ -111,7 +111,7 @@ public class S3BackupConnector implements BackupConnector {
 
 	public void storeSignature(final String key) {
 
-		if (S3Backup.dryRun)
+		if (S3TimeMachine.dryRun)
 			return;
 
 		threadPool.execute(new Runnable() {
@@ -134,7 +134,7 @@ public class S3BackupConnector implements BackupConnector {
 	public void startBackup(String tstamp) {
 		nextPath = backupPath + tstamp + "/";
 
-		if (S3Backup.dryRun)
+		if (S3TimeMachine.dryRun)
 			return;
 
 		byte[] data = tstamp.getBytes();
@@ -160,7 +160,7 @@ public class S3BackupConnector implements BackupConnector {
 
 	public void storeInputStream(String key, InputStream is, Long len) {
 
-		if (S3Backup.dryRun)
+		if (S3TimeMachine.dryRun)
 			return;
 
 		PutObjectRequest req = null;
@@ -228,7 +228,7 @@ public class S3BackupConnector implements BackupConnector {
 	@SuppressWarnings("deprecation")
 	private void fixStorageClass(final String key) {
 
-		if (S3Backup.dryRun)
+		if (S3TimeMachine.dryRun)
 			return;
 		// CopyObjectRequest copyObjectRequest= new CopyObjectRequest(bucketName, key, bucketName,
 		// key).withStorageClass(StorageClass.StandardInfrequentAccess);

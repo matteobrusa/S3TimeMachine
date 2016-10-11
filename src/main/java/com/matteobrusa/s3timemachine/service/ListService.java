@@ -1,11 +1,13 @@
-package com.matteobrusa.s3backup;
+package com.matteobrusa.s3timemachine.service;
 
 import java.util.Map;
 import java.util.Set;
 import java.util.TreeSet;
 import java.util.concurrent.LinkedBlockingQueue;
 
-import com.matteobrusa.s3backup.connector.BackupConnector;
+import com.matteobrusa.s3timemachine.Report;
+import com.matteobrusa.s3timemachine.SigHelper;
+import com.matteobrusa.s3timemachine.connector.BackupConnector;
 
 public class ListService extends LoggingService {
 

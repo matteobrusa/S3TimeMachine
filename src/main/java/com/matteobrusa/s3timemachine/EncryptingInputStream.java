@@ -1,4 +1,4 @@
-package com.matteobrusa.s3backup;
+package com.matteobrusa.s3timemachine;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -6,6 +6,8 @@ import java.security.AlgorithmParameters;
 
 import javax.crypto.Cipher;
 import javax.crypto.spec.IvParameterSpec;
+
+import com.matteobrusa.s3timemachine.service.CryptoService;
 
 public class EncryptingInputStream extends InputStream {
 

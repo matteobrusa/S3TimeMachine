@@ -1,4 +1,4 @@
-package com.matteobrusa.s3backup.connector;
+package com.matteobrusa.s3timemachine.connector;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -10,15 +10,14 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
-import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
 import java.util.TreeMap;
 import java.util.TreeSet;
 
-import com.matteobrusa.s3backup.S3Backup;
-import com.matteobrusa.s3backup.SigHelper;
-import com.matteobrusa.s3backup.Tools;
+import com.matteobrusa.s3timemachine.S3TimeMachine;
+import com.matteobrusa.s3timemachine.SigHelper;
+import com.matteobrusa.s3timemachine.Tools;
 
 public class LocalBackupConnector implements BackupConnector {
 
@@ -42,7 +41,7 @@ public class LocalBackupConnector implements BackupConnector {
 
 	public void startBackup(String tstamp) {
 
-		if (S3Backup.dryRun)
+		if (S3TimeMachine.dryRun)
 			return;
 
 		if (!backupsDir.exists() && !filesDir.exists()) {
@@ -176,7 +175,7 @@ public class LocalBackupConnector implements BackupConnector {
 
 	public void storeSignature(String file) {
 
-		if (S3Backup.dryRun)
+		if (S3TimeMachine.dryRun)
 			return;
 
 		File f = new File(nextDir, file);
@@ -196,7 +195,7 @@ public class LocalBackupConnector implements BackupConnector {
 
 	public void restoreFile(String source, Path filePath) {
 
-		if (S3Backup.dryRun)
+		if (S3TimeMachine.dryRun)
 			return;
 
 		try {
@@ -222,7 +221,7 @@ public class LocalBackupConnector implements BackupConnector {
 
 	public void storeInputStream(String key, InputStream is, Long len) {
 
-		if (S3Backup.dryRun)
+		if (S3TimeMachine.dryRun)
 			return;
 
 		Path dest = Paths.get(filesDir.getPath());

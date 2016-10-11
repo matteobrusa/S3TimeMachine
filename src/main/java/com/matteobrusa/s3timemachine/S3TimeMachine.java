@@ -1,4 +1,4 @@
-package com.matteobrusa.s3backup;
+package com.matteobrusa.s3timemachine;
 
 import java.util.Arrays;
 import java.util.LinkedList;
@@ -6,55 +6,21 @@ import java.util.List;
 
 import com.amazonaws.AmazonClientException;
 import com.amazonaws.AmazonServiceException;
-import com.matteobrusa.s3backup.connector.BackupConnector;
-import com.matteobrusa.s3backup.connector.LocalBackupConnector;
-import com.matteobrusa.s3backup.connector.S3BackupConnector;
-import com.matteobrusa.s3backup.connector.S3URI;
+import com.matteobrusa.s3timemachine.connector.BackupConnector;
+import com.matteobrusa.s3timemachine.connector.LocalBackupConnector;
+import com.matteobrusa.s3timemachine.connector.S3BackupConnector;
+import com.matteobrusa.s3timemachine.connector.S3URI;
+import com.matteobrusa.s3timemachine.service.BackupService;
+import com.matteobrusa.s3timemachine.service.ListService;
+import com.matteobrusa.s3timemachine.service.PruneService;
+import com.matteobrusa.s3timemachine.service.RestoreService;
 
-public class S3Backup {
+public class S3TimeMachine {
 
 	public static boolean dryRun;
-	static boolean debug;
+	public static boolean debug;
 
 	public static void main(String[] args) {
-
-		// CryptoService.setPassword("pazuz");
-		// S3Backup.debug=true
-		// File from = new File("test.txt");
-		// File to = new File("test.txt.aes");
-		// File back = new File("back.txt");
-		// to.delete();
-		// back.delete();
-		//
-		// try {
-		//
-		// // EncryptingInputStream eis = new EncryptingInputStream(new
-		// // FileInputStream(from));
-		//
-		// InputStream eis = CryptoService.getEncryptingInputStream(new
-		// FileInputStream(from));
-		//
-		// DataInputStream dis = new DataInputStream(eis);
-		//
-		// byte[] data = new byte[16];
-		//
-		// // int n = eis.read(data);
-		// // n = eis.read(data);
-		// // n = eis.read(data);
-		// // dis.readFully(data);
-		//
-		// Files.copy(eis, to.toPath());
-		//
-		// // CryptoService.encrypt(from, new FileOutputStream(to));
-		//
-		// CryptoService.decrypt(new FileInputStream(to), back);
-		//
-		// } catch (IOException e) {
-		// // TODO Auto-generated catch block
-		// e.printStackTrace();
-		// }
-
-		// System.exit(0);
 
 		try {
 			int poolSize = 2;
@@ -173,8 +139,8 @@ public class S3Backup {
 					System.out.println("nothing to do... ");
 				} else {
 					System.out.print("Backed up " + report.count + " files, ");
-					System.out.println(
-							"transferred " + report.bytes/1024/1024 + " Mbytes from " + report.transferred + " new files in " + report.time/1000 + " seconds.");
+					System.out.println("transferred " + report.bytes / 1024 / 1024 + " Mbytes from " + report.transferred + " new files in "
+							+ report.time / 1000 + " seconds.");
 				}
 
 				// Restore
@@ -242,7 +208,7 @@ public class S3Backup {
 
 	private static void help() {
 		System.err.println();
-		System.err.println("Usage: java -jar S3Backup.jar <action> <params> <source> <destination>");
+		System.err.println("Usage: java -jar S3TimeMachine.jar <action> <params> <source> <destination>");
 		System.err.println();
 		System.err.println("Actions");
 		System.err.println("backup, restore, list, prune");
@@ -256,23 +222,23 @@ public class S3Backup {
 		System.err.println("--dry-run does not change any local or remote file");
 		System.err.println("--snapshot=YYYYMMDDTHHMMSS list or restore a specific snapshot");
 		System.err.println("--dry-run does not change any local or remote file");
+		System.err.println("--verbose shows more infos");
 		System.err.println();
 		System.err.println("Examples");
 		System.err.println();
 		System.err.println("Backup and restore to Amazon S3");
-		System.err.println("java -jar S3Backup.jar backup --exclude=XXX /Volumes/MyPhotos mybucket:backup/");
-		System.err
-				.println("java -jar S3Backup.jar restore --snapshot=20160917T213100 --include=DSC_1234.jpg mybucket:backup/ /Volumes/MyPhotos");
+		System.err.println("java -jar S3TimeMachine.jar backup --exclude=XXX /Volumes/MyPhotos mybucket:backup/");
+		System.err.println(
+				"java -jar S3TimeMachine.jar restore --snapshot=20160917T213100 --include=DSC_1234.jpg mybucket:backup/ /Volumes/MyPhotos");
 		System.err.println();
 		System.err.println("AES encrypted backup to local disk");
-		System.err.println("java -jar S3Backup.jar backup --password=MyPa55 --exclude=XXX /Volumes/MyPhotos /Volumes/backup/");
+		System.err.println("java -jar S3TimeMachine.jar backup --password=MyPa55 --exclude=XXX /Volumes/MyPhotos /Volumes/backup/");
 		System.err.println();
 		System.err.println("List existing backups and their content");
-		System.err.println("java -jar S3Backup.jar list mybucket:backup/");
-		System.err.println("java -jar S3Backup.jar list --snapshot=20160917T213100 mybucket:backup/");
+		System.err.println("java -jar S3TimeMachine.jar list mybucket:backup/");
+		System.err.println("java -jar S3TimeMachine.jar list --snapshot=20160917T213100 mybucket:backup/");
 		System.err.println("");
 
-		// System.err.println("--verbose shows more infos");
 		// System.err.println("--yes doesn't ask for confirmation");
 		System.err.println();
 	}
