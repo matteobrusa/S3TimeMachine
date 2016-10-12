@@ -1,8 +1,17 @@
 # S3TimeMachine
-A command line tool written in java to backup to Amazon S3 inspired by MacOS' time machine 
+*A command tool written in java to backup to Amazon S3 inspired by MacOS' time machine*
+
+### Features
+- local and Amazon S3 destinations
+- incremental, bandwidth efficient transfer
+- hash based deduplication
+- AES encryption
+- fast, multithreaded transfer
+- databaseless, no single point of failure
+- regex based filtering
 
 
-
+```
 Usage: java -jar S3TimeMachine.jar <action> <params> <source> <destination>
 
 Actions
@@ -30,3 +39,4 @@ java -jar S3TimeMachine.jar backup --password=MyPa55 --exclude=XXX /Volumes/MyPh
 List existing backups and their content
 java -jar S3TimeMachine.jar list mybucket:backup/
 java -jar S3TimeMachine.jar list --snapshot=20160917T213100 mybucket:backup/
+```
