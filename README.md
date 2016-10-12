@@ -2,7 +2,7 @@
 *A command tool written in java to backup to Amazon S3 inspired by MacOS' time machine*
 
 ### Features
-- local and Amazon S3 destinations
+- backup to and restore from local disk or Amazon S3
 - incremental, bandwidth efficient transfer
 - hash based deduplication
 - AES encryption
