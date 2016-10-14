@@ -10,6 +10,10 @@
 - databaseless, no single point of failure
 - regex based filtering
 
+### Performance
+S3TimeMachine is quite speedy: an empty run backup (all in sync) with about 33k files on a 5Mbps uplink takes 82 seconds.
+The same backup set to a local target (external USB disk) completes in 53 seconds.
+
 
 ```
 Usage: java -jar S3TimeMachine.jar <action> <params> <source> <destination>
